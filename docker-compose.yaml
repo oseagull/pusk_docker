@@ -10,10 +10,12 @@ services:
       - SECURITY_SALT_FILE=/run/secrets/security_salt
       - LOGGING_LEVEL=INFO
     secrets:
-      - source: crypto_key
-        target: crypto_key
-      - source: security_salt
-        target: security_salt
+      crypto_key:
+        file: ./crypto_key.txt
+        mode: 0440
+      security_salt:
+        file: ./security_salt.txt
+        mode: 0440
     volumes:
       - pusk-data:/opt/pusk/data
       - pusk-logs:/opt/pusk/log

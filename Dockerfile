@@ -1,14 +1,14 @@
 FROM eclipse-temurin:17-jre-alpine
 
-# Create non-root user
-RUN addgroup -S pusk && \
-    adduser -S pusk -G pusk && \
-    mkdir -p /opt/pusk/data /opt/pusk/log && \
-    chown -R pusk:pusk /opt/pusk
+# Create directories
+RUN mkdir -p /opt/pusk/data /opt/pusk/log /opt/pusk/config
 
 # Copy application files
-COPY --chown=pusk:pusk ./pusk /opt/pusk
-COPY --chown=pusk:pusk ./lib /opt/pusk/lib
+COPY ./pusk /opt/pusk
+COPY ./lib /opt/pusk/lib
+
+# Copy configuration file
+COPY ./pusk/data/application.properties /opt/pusk/config/application.properties
 
 # Set execute permissions
 RUN chmod +x /opt/pusk/ite-pusk-linux.sh
@@ -18,11 +18,8 @@ VOLUME [ "/opt/pusk/data" ]
 VOLUME [ "/opt/pusk/log" ]
 
 # Copy and set entrypoint
-COPY --chown=pusk:pusk ./entrypoint.sh /opt/entrypoint.sh
+COPY ./entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
-
-# Switch to non-root user
-USER pusk
 
 # Add health check
 HEALTHCHECK --interval=30s --timeout=3s \

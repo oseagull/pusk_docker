@@ -74,16 +74,13 @@ start() {
     # Create log directory if it doesn't exist
     mkdir -p "$PUSK_DIR/log"
 
-    # Ensure proper permissions
-    chown -R pusk:pusk "$PUSK_DIR/data" "$PUSK_DIR/log"
-
     # Лог консоли
     cd "$PUSK_DIR/bin"
     exec $JAVA_HOME/bin/java \
         -cp ite-pusk.jar:../lib/* \
         -Dloader.main=com.ite.utils.pusk.Application \
         org.springframework.boot.loader.PropertiesLauncher \
-        --spring.config.import=optional:"$PUSK_DIR"/data/application.properties
+        --spring.config.import=optional:"$PUSK_DIR"/config/application.properties
 }
 
 # Старт приложения
