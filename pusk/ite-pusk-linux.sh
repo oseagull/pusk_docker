@@ -66,7 +66,7 @@ start() {
 
   # Лог консоли
   cd "$PUSK_DIR/bin";
-  $JAVA_HOME/bin/java -cp ite-pusk.jar:../lib/* -Dloader.main=com.ite.utils.pusk.Application org.springframework.boot.loader.PropertiesLauncher --spring.config.import=optional:"$PUSK_DIR"/data/application.properties >> /dev/null 2>&1
+  $JAVA_HOME/bin/java -cp ite-pusk.jar:../lib/* -Dloader.main=com.ite.utils.pusk.Application org.springframework.boot.loader.PropertiesLauncher --spring.config.import=optional:"$PUSK_DIR"/data/application.properties >> /dev/null 2>&1 &
   echo "OK"
 
 }

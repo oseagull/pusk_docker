@@ -23,3 +23,14 @@ send.log.to.syslog=false
 syslog.host=localhost
 #Идентификации источника сообщения. Возможные варианты:KERN, USER, MAIL, DAEMON, AUTH, SYSLOG, LPR, NEWS, UUCP, CRON, AUTHPRIV, FTP, NTP, AUDIT, ALERT, CLOCK, LOCAL0, LOCAL1, LOCAL2, LOCAL3, LOCAL4, LOCAL5, LOCAL6, LOCAL7
 syslog.facility=LOCAL0
+
+#Алгоритм шифрования паролей
+cryptography.algorithm=AES
+#Ключ шифрования паролей
+cryptography.key=A134E8FF3F982HD:
+
+#Соль для хеширования учетных данных пользователей ПУСК
+security.salt=1jhjg2ddx3wqe12asdad1:
+
+#Настройка проверки сложности пароля
+check.password.strength=true
