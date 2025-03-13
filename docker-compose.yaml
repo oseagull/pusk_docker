@@ -1,9 +1,47 @@
 ---
-version: "3"
+version: "3.8"
 services:
   pusk:
     image: segateekb/pusk:latest
-    container_name: pusk
     ports:
-      - 8080:8080
-    restart: unless-stopped
+      - "8080:8080"
+    environment:
+      - CRYPTOGRAPHY_KEY_FILE=/run/secrets/crypto_key
+      - SECURITY_SALT_FILE=/run/secrets/security_salt
+      - LOGGING_LEVEL=INFO
+    secrets:
+      - source: crypto_key
+        target: crypto_key
+      - source: security_salt
+        target: security_salt
+    volumes:
+      - pusk-data:/opt/pusk/data
+      - pusk-logs:/opt/pusk/log
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+secrets:
+  crypto_key:
+    external: true
+  security_salt:
+    external: true
+
+volumes:
+  pusk-data:
+    driver: local
+  pusk-logs:
+    driver: local
