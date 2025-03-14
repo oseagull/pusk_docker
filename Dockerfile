@@ -20,6 +20,10 @@ VOLUME [ "/opt/pusk/log" ]
 # Copy and set entrypoint
 COPY ./entrypoint.sh /opt/entrypoint.sh
 RUN chmod +x /opt/entrypoint.sh
+RUN echo -e '#!/bin/sh\n echo "systemd (systemctl) is not available in this container."\n exit 0' > /usr/local/bin/systemctl && \
+    chmod +x /usr/local/bin/systemctl && \
+    ln -s /usr/local/bin/systemctl /bin/systemctl
+
 
 # Add health check
 HEALTHCHECK --interval=30s --timeout=3s \

@@ -101,52 +101,52 @@ status() {
 
 }
 
-# Генерация файла для сервиса
-install() {
+# # Генерация файла для сервиса
+# install() {
   
-  check_java_ver
+#   check_java_ver
 
-  echo "Создание службы ite-pusk.service..."
-  cat > /etc/systemd/system/ite-pusk.service << EOF
-[Unit]
-Description=ite-pusk
-Wants=network-online.target
-After=network-online.target
+#   echo "Создание службы ite-pusk.service..."
+#   cat > /etc/systemd/system/ite-pusk.service << EOF
+# [Unit]
+# Description=ite-pusk
+# Wants=network-online.target
+# After=network-online.target
 
-[Service]
-WorkingDirectory=$(dirname $(readlink -e "$0"))/
-Type=forking
-Restart=on-failure
-TimeoutStartSec=5
-TimeoutStopSec=5
-ExecStart=$(dirname $(readlink -e "$0"))/ite-pusk-linux.sh start
-SyslogIdentifier=ite-pusk
-ExecStop=$(dirname $(readlink -e "$0"))/ite-pusk-linux.sh stop
-RemainAfterExit=yes
+# [Service]
+# WorkingDirectory=$(dirname $(readlink -e "$0"))/
+# Type=forking
+# Restart=on-failure
+# TimeoutStartSec=5
+# TimeoutStopSec=5
+# ExecStart=$(dirname $(readlink -e "$0"))/ite-pusk-linux.sh start
+# SyslogIdentifier=ite-pusk
+# ExecStop=$(dirname $(readlink -e "$0"))/ite-pusk-linux.sh stop
+# RemainAfterExit=yes
 
-[Install]
-WantedBy=multi-user.target
-EOF
-  # restart daemon and enable service
-  echo "Обновление списка сервисов и включение автостарта ПУСКа"
-  sudo systemctl daemon-reload
-  sudo systemctl enable ite-pusk
+# [Install]
+# WantedBy=multi-user.target
+# EOF
+#   # restart daemon and enable service
+#   echo "Обновление списка сервисов и включение автостарта ПУСКа"
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable ite-pusk
 
-  echo "Введите 'sudo systemctl start ite-pusk' для запуска сервиса."
-  echo "Введите 'sudo systemctl stop ite-pusk' для остановки сервиса."
+#   echo "Введите 'sudo systemctl start ite-pusk' для запуска сервиса."
+#   echo "Введите 'sudo systemctl stop ite-pusk' для остановки сервиса."
 
-}
+# }
 
-# Удаление сервиса
+# # Удаление сервиса
 
-uninstall() {
+# uninstall() {
 
-  sudo systemctl disable ite-pusk
-  sudo rm /etc/systemd/system/ite-pusk.service
-  sudo systemctl daemon-reload
-  echo "Служба ite-pusk.service удалена."
+#   sudo systemctl disable ite-pusk
+#   sudo rm /etc/systemd/system/ite-pusk.service
+#   sudo systemctl daemon-reload
+#   echo "Служба ite-pusk.service удалена."
 
-}
+# }
 
 check() {
 
@@ -170,12 +170,12 @@ case "$1" in
     stop
     start
     ;;
-  install)
-    install
-    ;;
-  uninstall)
-    uninstall
-    ;;
+  # install)
+  #   install
+  #   ;;
+  # uninstall)
+  #   uninstall
+  #   ;;
   check)
     check
     ;;
